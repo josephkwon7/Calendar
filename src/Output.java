@@ -1,6 +1,6 @@
 
 public class Output {
-	public static void printResult(int result) {
-		System.out.println(String.format("입력한 수의 합은 %d 입니다.", result));
+	public static void print(int year, int month, int result) {
+		System.out.println(String.format("%d년 %d월은 %d일 까지 있습니다.", year, month, result));
 	}
 }
