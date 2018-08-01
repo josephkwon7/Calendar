@@ -11,8 +11,9 @@ public class CalendarMain {
 			inputYear = yearNMonth[0];
 			inputMonth = yearNMonth[1];
 			if (inputYear == -1 || inputMonth == -1) break;
-			int maxDate = CalendarUtils.getMaxDate(inputYear, inputMonth);
-			Output.print(inputYear, inputMonth, maxDate);
+			CalendarUtils.printCalc(inputYear, inputMonth);
+//			int maxDate = CalendarUtils.getMaxDate(inputYear, inputMonth);
+//			Output.print(inputYear, inputMonth, maxDate);
 		}
 		System.out.println("Have a nice day!");
 		scanner.close();
