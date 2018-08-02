@@ -17,6 +17,30 @@ public class CalendarHandler {
 		this.lastDay = cal.getActualMaximum(Calendar.DATE);
 	}
 
+	public String[][] getCalArray() {
+		String[][] calArray = new String[6][width];
+		int dayForPrint = 1; // 출력 날짜
+
+		int row = 0;
+		for (int i = 1; dayForPrint <= lastDay; i++) {
+			// 시작 요일이 오기 전에는 공백 출력
+			if (i < startDayOfWeek) {
+				calArray[row][i - 1] = " ";
+			} else {
+				// 날짜 배열에 입력
+				// System.out.println("row : " + row + " i : " + i);
+				calArray[row][(i - 1) % width] = Integer.toString(dayForPrint);
+				dayForPrint++;
+
+				// 마지막 열에 오면 행 바꿈
+				if (i % width == 0) {
+					row++;
+				}
+			}
+		}
+		return calArray;
+	}
+
 	public String[][] getDotArray() {
 		String[][] dotArray = new String[6][width];
 		int year = cal.get(Calendar.YEAR);
@@ -44,7 +68,7 @@ public class CalendarHandler {
 				String dayForPrintStr = (dayForPrint < 10) ? "0" + dayForPrint : "" + dayForPrint;
 				System.out.println(dayForPrintStr);
 				if (scheduledDateList.contains(dayForPrintStr)) {
-					dotArray[row][(i-1) % width] = "*";
+					dotArray[row][(i-1) % width] = "";
 				} else {
 					dotArray[row][(i-1) % width] = " ";
 				}
@@ -56,31 +80,7 @@ public class CalendarHandler {
 		}
 		return dotArray;
 	}
-
-	public String[][] getCalArray() {
-		String[][] calArray = new String[6][width];
-		int dayForPrint = 1; // 출력 날짜
-
-		int row = 0;
-		for (int i = 1; dayForPrint <= lastDay; i++) {
-			// 시작 요일이 오기 전에는 공백 출력
-			if (i < startDayOfWeek) {
-				calArray[row][i - 1] = " ";
-			} else {
-				// 날짜 배열에 입력
-				// System.out.println("row : " + row + " i : " + i);
-				calArray[row][(i - 1) % width] = Integer.toString(dayForPrint);
-				dayForPrint++;
-
-				// 마지막 열에 오면 행 바꿈
-				if (i % width == 0) {
-					row++;
-				}
-			}
-		}
-		return calArray;
-	}
-
+	
 	public void printCalc(String[][] calArray, String[][] dotArray) {
 		
 		// 달력 헤더 출력
