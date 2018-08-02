@@ -2,20 +2,32 @@ import java.util.Scanner;
 
 public class CalendarMain {
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
-		int[] yearNMonth = new int[2];
-		int inputYear = 0;
-		int inputMonth = 0;
-		while (true) {
-			yearNMonth = Input.getYearNMonth(scanner);
-			inputYear = yearNMonth[0];
-			inputMonth = yearNMonth[1];
-			if (inputYear == -1 || inputMonth == -1) break;
-			CalendarUtils.printCalc(inputYear, inputMonth);
-//			int maxDate = CalendarUtils.getMaxDate(inputYear, inputMonth);
-//			Output.print(inputYear, inputMonth, maxDate);
+		Scanner sc = new Scanner(System.in);
+		Input.printMenu();
+
+		boolean quitFlag = false;
+		while (!quitFlag) {
+			Input.requestInput();
+			String selection = Input.getRootSelection(sc);
+			
+			switch (selection) {
+			case "1" : //일정등록
+				RootMenuHandler.handle1(sc);
+				break;
+			case "2" : //일정검색
+				RootMenuHandler.handle2(sc);
+				break;
+			case "3" : //달력보기
+				RootMenuHandler.handle3(sc);
+				break;
+			case "h" : //도움말
+				//
+				break;
+			default : //나가기(q)
+				quitFlag = true;
+			}
 		}
-		System.out.println("Have a nice day!");
-		scanner.close();
+		System.out.println("Bye~");
+		sc.close();
 	}
 }
