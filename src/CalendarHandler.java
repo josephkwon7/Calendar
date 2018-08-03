@@ -57,7 +57,7 @@ public class CalendarHandler {
 				scheduledDateList.add(key.substring(8, 10));
 			}
 		}
-		System.out.print("scheduled date in current month : ");
+		System.out.print("scheduled date in given month : ");
 		System.out.println(scheduledDateList);
 		int row = 0;
 		for (int i = 1; dayForPrint <= lastDay; i++) {
@@ -66,9 +66,8 @@ public class CalendarHandler {
 				dotArray[row][i-1] = " ";
 			} else {
 				String dayForPrintStr = (dayForPrint < 10) ? "0" + dayForPrint : "" + dayForPrint;
-				System.out.println(dayForPrintStr);
 				if (scheduledDateList.contains(dayForPrintStr)) {
-					dotArray[row][(i-1) % width] = "";
+					dotArray[row][(i-1) % width] = ".";
 				} else {
 					dotArray[row][(i-1) % width] = " ";
 				}
@@ -93,10 +92,10 @@ public class CalendarHandler {
 		// 날짜 배열 출력
 		for (int i = 1; i < lastDay + startDayOfWeek; i++) {
 			System.out.print(calArray[rowP][(i - 1) % width] + "\t");
-			if ((i - 1) % width == width - 1) {
+			if ((i - 1) % width == width - 1 || i == lastDay + startDayOfWeek - 1) {
 				System.out.println();
 				for (int j = 0; j < width; j++) {
-					System.out.print(dotArray[rowP][j] + "\t");
+					if (dotArray[rowP][j] != null) System.out.print(dotArray[rowP][j] + "\t");
 				}
 				System.out.println();
 				rowP++;

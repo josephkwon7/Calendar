@@ -7,7 +7,11 @@ import java.util.Scanner;
 
 public class RootMenuHandler {
 	public static Map<String, List<String>> scheduleMap = new HashMap<String, List<String>>();
-
+	
+	public static void init() {
+		FileIO.readSavedSch();
+	}
+	
 	public static void handle1(Scanner sc) {
 		System.out.println("[일정 등록] 날짜를 입력하세요.(YYYY-MM-DD 형식)");
 		System.out.println("> ");
@@ -25,7 +29,8 @@ public class RootMenuHandler {
 			List<String> existingArray = scheduleMap.get(date);
 			existingArray.add(text);
 		}
-		System.out.println("일정이 등록되었습니다.");
+		boolean SaveResult = FileIO.writeSch(scheduleMap);
+		if (SaveResult) System.out.println("일정이 등록되었습니다.");
 		System.out.println(scheduleMap);
 	}
 
@@ -55,11 +60,13 @@ public class RootMenuHandler {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, year);
 		cal.set(Calendar.MONTH, month - 1);
+		cal.set(Calendar.DATE, 1);
 				
 		CalendarHandler calHndler = new CalendarHandler(cal);
 		String[][] calArray = calHndler.getCalArray();
 		String[][] dotArray = calHndler.getDotArray();
-/*		
+		
+		/*
 		//calArray 확인
 		System.out.println("calArray 확인");
 		int cnt1 = 0;
@@ -71,7 +78,6 @@ public class RootMenuHandler {
 			}
 			cnt1++;
 		}
-
 		//dotArray 확인
 		System.out.println("dotArray 확인");
 		cnt1 = 0;
@@ -83,7 +89,8 @@ public class RootMenuHandler {
 			}
 			cnt1++;
 		}
-*/		
+		*/
+		
 		//출력
 		calHndler.printCalc(calArray, dotArray);
 
