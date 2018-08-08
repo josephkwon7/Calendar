@@ -6,13 +6,14 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class RootMenuHandler {
-	public static Map<String, List<String>> scheduleMap = new HashMap<String, List<String>>();
+//	public static Map<String, List<String>> scheduleMap = new HashMap<String, List<String>>();
 	
 	public static void init() {
-		FileIO.readSavedSch();
+		//FileIO.readSavedSch();
 	}
 	
 	public static void handle1(Scanner sc) {
+		boolean saveResult = false;
 		System.out.println("[일정 등록] 날짜를 입력하세요.(YYYY-MM-DD 형식)");
 		System.out.println("> ");
 		String date = sc.next().trim();
@@ -20,6 +21,7 @@ public class RootMenuHandler {
 		System.out.println("> ");
 		String text = sc.next();
 		// System.out.println("text : " + text);
+		/*
 		if (!scheduleMap.containsKey(date)) {
 			List<String> textList = new ArrayList<String>();
 			textList.add(text);
@@ -30,14 +32,26 @@ public class RootMenuHandler {
 			existingArray.add(text);
 		}
 		boolean SaveResult = FileIO.writeSch(scheduleMap);
-		if (SaveResult) System.out.println("일정이 등록되었습니다.");
-		System.out.println(scheduleMap);
+		*/
+		
+		DbIO dbIO = new DbIO();
+		if (!dbIO.checkIfDatabaseExists()) dbIO.createDatabase();
+		if (!dbIO.checkIfTableExists()) dbIO.createTable();
+		if (dbIO.addSchedule(date, text) > -1) saveResult = true;
+		dbIO.closeAll();
+		
+		if (saveResult) {
+			System.out.println("일정이 등록되었습니다.");
+		} else {
+			System.out.println("일정 등록에 실패하였습니다.");
+		}
 	}
 
 	public static void handle2(Scanner sc) {
 		System.out.println("[일정 검색] 날짜를 입력하세요.(YYYY-MM-DD 형식)");
 		System.out.println("> ");
 		String date = sc.next().trim();
+		/*
 		if (scheduleMap.containsKey(date)) {
 			int schCount = scheduleMap.get(date).size();
 			System.out.println(schCount + "개의 일정이 있습니다.");
@@ -47,6 +61,16 @@ public class RootMenuHandler {
 				System.out.println(counter + ". " + text);
 			}
 		}
+		*/
+		DbIO dbIO = new DbIO();
+		List<String> schedules = dbIO.getScheduleForDay(date);
+		System.out.println(schedules.size() + "개의 일정이 있습니다.");
+		int schCounter = 0;
+		for (String text : schedules) {
+			schCounter++;
+			System.out.println(schCounter + ". " + text);
+		}
+		dbIO.closeAll();
 	}
 
 	public static void handle3(Scanner sc) {

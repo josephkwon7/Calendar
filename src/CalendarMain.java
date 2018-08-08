@@ -1,7 +1,9 @@
 import java.util.Scanner;
 
 public class CalendarMain {
+	
 	public static void main(String[] args) {
+
 		Scanner sc = new Scanner(System.in);
 		Input.printMenu();
 		RootMenuHandler.init();

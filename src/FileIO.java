@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//사용안함.
 public class FileIO {
 	@SuppressWarnings("finally")
 	public static boolean writeSch(Map<String, List<String>> scheduleMap) {
@@ -69,7 +70,7 @@ public class FileIO {
 				dateSchPair = readLine.split("\\|\\|");
 				schedules = dateSchPair[1].split("&&");
 				scheduleList = Arrays.asList(schedules);
-				RootMenuHandler.scheduleMap.put(dateSchPair[0], scheduleList);
+//				RootMenuHandler.scheduleMap.put(dateSchPair[0], scheduleList);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

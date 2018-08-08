@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -42,21 +41,19 @@ public class CalendarHandler {
 	}
 
 	public String[][] getDotArray() {
+		DbIO dbIO = new DbIO();
 		String[][] dotArray = new String[6][width];
 		int year = cal.get(Calendar.YEAR);
 		int month = cal.get(Calendar.MONTH) + 1;
-		String monthStr = (month < 10) ? "0" + month :  "" + month;
 		int dayForPrint = 1;
-		List<String> scheduledDateList = new ArrayList<String>();
-		
-		String searchStr = year + "-" + monthStr;
-		System.out.println("searchStr : " + searchStr);
-		for(String key : RootMenuHandler.scheduleMap.keySet()) {
+		List<String> scheduledDateList = dbIO.getScheduledDateForMonth(year, month);
+		dbIO.closeAll();
+/*		for(String key : RootMenuHandler.scheduleMap.keySet()) {
 			if (key.startsWith(searchStr)) {
 				System.out.println("key : " + key);
 				scheduledDateList.add(key.substring(8, 10));
 			}
-		}
+		}*/
 		System.out.print("scheduled date in given month : ");
 		System.out.println(scheduledDateList);
 		int row = 0;
